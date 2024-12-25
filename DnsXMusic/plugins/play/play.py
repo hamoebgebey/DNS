@@ -66,7 +66,7 @@ from DnsXMusic.utils.stream.stream import stream
             "تشغيل قناة بالقوة",
             "تشغيل قناة فيديو بالقوة",
         ],
-        prefixes=["", "!", "%", ",", "@", "#"],
+        prefixes=["", "", "", "", "", ""],
     )
     & filters.group
     & ~BANNED_USERS
