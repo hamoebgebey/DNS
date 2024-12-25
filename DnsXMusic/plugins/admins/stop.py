@@ -28,12 +28,7 @@ from DnsXMusic.utils.database import (
 )
 
 
-@app.on_message(
-    filters.command(["ايقاف", "قف", "توقف", "ق"]) & filters.group & ~BANNED_USERS
-)
-@app.on_message(
-    filters.command(["stop", "end", "cstop", "cend"]) & filters.group & ~BANNED_USERS
-)
+@app.on_message(filters.command(["stop", "end"]) | filters.command(["ايقاف","قف"],prefixes= ["/", "!","","#"]) & filters.group)
 async def stop_music(cli, message: Message):
     if await is_maintenance() is False:
         if message.from_user.id not in SUDOERS:
