@@ -48,19 +48,7 @@ from DnsXMusic.utils.stream.stream import stream
             "cplayforce",
             "cvplayforce",
         ],
-@app.on_message(
-    filters.command(
-        [
-            "شغل",
-            "تشغيل",
-            "cplay",
-            "cute",
-            "cvplay",
-            "playforce",
-            "vplayforce",
-            "cplayforce",
-            "cvplayforce",
-        ],
+        
         prefixes=["/", "!", "%", ",", "@", "#"],
     )
     & filters.group
