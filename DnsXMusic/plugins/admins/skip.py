@@ -7,213 +7,89 @@
 #
 # All rights reserved.
 #
-
-
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-import config
-from config import BANNED_USERS
-from strings import get_command
-from DnsXMusic import YouTube, app
+from config import BANNED_USERS, adminlist
+from strings import get_string
+from DnsXMusic import app
 from DnsXMusic.core.call import Dns
-from DnsXMusic.misc import db
-from DnsXMusic.utils.database import get_loop
-from DnsXMusic.utils.decorators import AdminRightsCheck
-from DnsXMusic.utils.inline.play import stream_markup, telegram_markup
-from DnsXMusic.utils.stream.autoclear import auto_clean
-from DnsXMusic.utils.thumbnails import gen_thumb
+from DnsXMusic.misc import SUDOERS
+from DnsXMusic.plugins import extra_plugins_enabled
+from DnsXMusic.utils.database import (
+    delete_filter,
+    get_cmode,
+    get_lang,
+    is_active_chat,
+    is_commanddelete_on,
+    is_maintenance,
+    is_nonadmin_chat,
+    set_loop,
+)
 
-# Commands
-SKIP_COMMAND = get_command("SKIP_COMMAND")
 
-@app.on_message(filters.command(["skip", "next"]) | filters.command(["تخطي","التالى","التالي"],prefixes= ["/", "!","","#"]) & filters.group)
-@AdminRightsCheck
-async def skip(cli, message: Message, _, chat_id):
+@app.on_message(filters.command(["stop", "end"]) | filters.command(["ايقاف","قف"],prefixes= ["/", "!","","#"]) & filters.group)
+async def stop_music(cli, message: Message):
+    if await is_maintenance() is False:
+        if message.from_user.id not in SUDOERS:
+            return await message.reply_text(
+                "Bot is under maintenance. Please wait for some time..."
+            )
     if not len(message.command) < 2:
-        loop = await get_loop(chat_id)
-        if loop != 0:
-            return await message.reply_text(_["admin_12"])
-        state = message.text.split(None, 1)[1].strip()
-        if state.isnumeric():
-            state = int(state)
-            check = db.get(chat_id)
-            if check:
-                count = len(check)
-                if count > 2:
-                    count = int(count - 1)
-                    if 1 <= state <= count:
-                        for x in range(state):
-                            popped = None
-                            try:
-                                popped = check.pop(0)
-                            except:
-                                return await message.reply_text(_["admin_16"])
-                            if popped:
-                                await auto_clean(popped)
-                            if not check:
-                                try:
-                                    await message.reply_text(
-                                        _["admin_10"].format(
-                                            message.from_user.first_name
-                                        ),
-                                        disable_web_page_preview=True,
-                                    )
-                                    await Dns.stop_stream(chat_id)
-                                except:
-                                    return
-                                break
-                    else:
-                        return await message.reply_text(_["admin_15"].format(count))
+        if extra_plugins_enabled:
+            if not message.command[0][0] == "c" and not message.command[0][0] == "e":
+                filter = " ".join(message.command[1:])
+                deleted = await delete_filter(message.chat.id, filter)
+                if deleted:
+                    return await message.reply_text(f"**ᴅᴇʟᴇᴛᴇᴅ ғɪʟᴛᴇʀ {filter}.**")
                 else:
-                    return await message.reply_text(_["admin_14"])
+                    return await message.reply_text("**ɴᴏ sᴜᴄʜ ғɪʟᴛᴇʀ.**")
+
+    if await is_commanddelete_on(message.chat.id):
+        try:
+            await message.delete()
+        except:
+            pass
+    try:
+        language = await get_lang(message.chat.id)
+        _ = get_string(language)
+    except:
+        _ = get_string("en")
+
+    if message.sender_chat:
+        upl = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="How to Fix this? ",
+                        callback_data="AnonymousAdmin",
+                    ),
+                ]
+            ]
+        )
+        return await message.reply_text(_["general_4"], reply_markup=upl)
+
+    if message.command[0][0] == "c":
+        chat_id = await get_cmode(message.chat.id)
+        if chat_id is None:
+            return await message.reply_text(_["setting_12"])
+        try:
+            await app.get_chat(chat_id)
+        except:
+            return await message.reply_text(_["cplay_4"])
+    else:
+        chat_id = message.chat.id
+    if not await is_active_chat(chat_id):
+        return await message.reply_text(_["general_6"])
+    is_non_admin = await is_nonadmin_chat(message.chat.id)
+    if not is_non_admin:
+        if message.from_user.id not in SUDOERS:
+            admins = adminlist.get(message.chat.id)
+            if not admins:
+                return await message.reply_text(_["admin_18"])
             else:
-                return await message.reply_text(_["queue_2"])
-        else:
-            return await message.reply_text(_["admin_13"])
-    else:
-        check = db.get(chat_id)
-        popped = None
-        try:
-            popped = check.pop(0)
-            if popped:
-                await auto_clean(popped)
-            if not check:
-                await message.reply_text(
-                    _["admin_10"].format(message.from_user.first_name),
-                    disable_web_page_preview=True,
-                )
-                try:
-                    return await Dns.stop_stream(chat_id)
-                except:
-                    return
-        except:
-            try:
-                await message.reply_text(
-                    _["admin_10"].format(message.from_user.first_name),
-                    disable_web_page_preview=True,
-                )
-                return await Dns.stop_stream(chat_id)
-            except:
-                return
-    queued = check[0]["file"]
-    title = (check[0]["title"]).title()
-    user = check[0]["by"]
-    user_id = message.from_user.id
-    streamtype = check[0]["streamtype"]
-    videoid = check[0]["vidid"]
-    duration_min = check[0]["dur"]
-    status = True if str(streamtype) == "video" else None
-    if "live_" in queued:
-        n, link = await YouTube.video(videoid, True)
-        if n == 0:
-            return await message.reply_text(_["admin_11"].format(title))
-        try:
-            await Dns.skip_stream(chat_id, link, video=status)
-        except Exception:
-            return await message.reply_text(_["call_7"])
-        button = telegram_markup(_, chat_id)
-        img = await gen_thumb(videoid)
-        run = await message.reply_photo(
-            photo=img,
-            caption=_["stream_1"].format(
-                user,
-                f"https://t.me/{app.username}?start=info_{videoid}",
-            ),
-            reply_markup=InlineKeyboardMarkup(button),
-        )
-        db[chat_id][0]["mystic"] = run
-        db[chat_id][0]["markup"] = "tg"
-    elif "vid_" in queued:
-        mystic = await message.reply_text(_["call_8"], disable_web_page_preview=True)
-        try:
-            file_path, direct = await YouTube.download(
-                videoid,
-                mystic,
-                videoid=True,
-                video=status,
-            )
-        except:
-            return await mystic.edit_text(_["call_7"])
-        try:
-            await Dns.skip_stream(chat_id, file_path, video=status)
-        except Exception:
-            return await mystic.edit_text(_["call_7"])
-        button = stream_markup(_, videoid, chat_id)
-        img = await gen_thumb(videoid)
-        run = await message.reply_photo(
-            photo=img,
-            caption=_["stream_1"].format(
-                title[:27],
-                f"https://t.me/{app.username}?start=info_{videoid}",
-                duration_min,
-                user,
-            ),
-            reply_markup=InlineKeyboardMarkup(button),
-        )
-        db[chat_id][0]["mystic"] = run
-        db[chat_id][0]["markup"] = "stream"
-        await mystic.delete()
-    elif "index_" in queued:
-        try:
-            await Dns.skip_stream(chat_id, videoid, video=status)
-        except Exception:
-            return await message.reply_text(_["call_7"])
-        button = telegram_markup(_, chat_id)
-        run = await message.reply_photo(
-            photo=config.STREAM_IMG_URL,
-            caption=_["stream_2"].format(user),
-            reply_markup=InlineKeyboardMarkup(button),
-        )
-        db[chat_id][0]["mystic"] = run
-        db[chat_id][0]["markup"] = "tg"
-    else:
-        try:
-            await Dns.skip_stream(chat_id, queued, video=status)
-        except Exception:
-            return await message.reply_text(_["call_7"])
-        if videoid == "telegram":
-            button = telegram_markup(_, chat_id)
-            run = await message.reply_photo(
-                photo=(
-                    config.TELEGRAM_AUDIO_URL
-                    if str(streamtype) == "audio"
-                    else config.TELEGRAM_VIDEO_URL
-                ),
-                caption=_["stream_1"].format(
-                    title, config.SUPPORT_GROUP, check[0]["dur"], user
-                ),
-                reply_markup=InlineKeyboardMarkup(button),
-            )
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
-        elif videoid == "soundcloud":
-            button = telegram_markup(_, chat_id)
-            run = await message.reply_photo(
-                photo=(
-                    config.SOUNCLOUD_IMG_URL
-                    if str(streamtype) == "audio"
-                    else config.TELEGRAM_VIDEO_URL
-                ),
-                caption=_["stream_1"].format(
-                    title, config.SUPPORT_GROUP, check[0]["dur"], user
-                ),
-                reply_markup=InlineKeyboardMarkup(button),
-            )
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
-        else:
-            button = stream_markup(_, videoid, chat_id)
-            img = await gen_thumb(videoid)
-            run = await message.reply_photo(
-                photo=img,
-                caption=_["stream_1"].format(
-                    title[:27],
-                    f"https://t.me/{app.username}?start=info_{videoid}",
-                    duration_min,
-                    user,
-                ),
-                reply_markup=InlineKeyboardMarkup(button),
-            )
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "stream"
+                if message.from_user.id not in admins:
+                    return await message.reply_text(_["admin_19"])
+    await Dns.stop_stream(chat_id)
+    await set_loop(chat_id, 0)
+    await message.reply_text(_["admin_9"].format(message.from_user.mention))
