@@ -53,6 +53,24 @@ from DnsXMusic.utils.stream.stream import stream
     & filters.group
     & ~BANNED_USERS
 )
+@app.on_message(
+    filters.command(
+        [
+            "تشغيل",
+            "شغل",
+            "cplay",
+            "cute",
+            "شغيل",
+            "playforce",
+            "vplayforce",
+            "cplayforce",
+            "cvplayforce",
+        ],
+        prefixes=["/", "!", "%", ",", "@", "#"],
+    )
+    & filters.group
+    & ~BANNED_USERS
+)
 @PlayWrapper
 async def play_commnd(
     client,
