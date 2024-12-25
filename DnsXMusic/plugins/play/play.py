@@ -48,7 +48,6 @@ from DnsXMusic.utils.stream.stream import stream
             "cplayforce",
             "cvplayforce",
         ],
-        
         prefixes=["/", "!", "%", ",", "@", "#"],
     )
     & filters.group
