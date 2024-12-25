@@ -22,7 +22,7 @@ from DnsXMusic.utils.decorators import AdminRightsCheck
 PAUSE_COMMAND = get_command("PAUSE_COMMAND")
 
 
-@app.on_message(filters.command(["resume"]) | filters.command(["كمل","الغاء كتم","الغاء الكتم","اتكلم"],prefixes= ["/", "!","","#"]) & filters.group)
+@app.on_message(filters.command(["resume"]) | filters.command(["كمل","الغاء كتم","الغاء الكتم","توقف"],prefixes= ["/", "!","","#"]) & filters.group)
 @AdminRightsCheck
 async def pause_admin(cli, message: Message, _, chat_id):
     if not len(message.command) == 1:
