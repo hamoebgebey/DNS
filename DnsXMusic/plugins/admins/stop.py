@@ -29,6 +29,9 @@ from DnsXMusic.utils.database import (
 
 
 @app.on_message(
+    filters.command(["ايقاف", "قف", "توقف", "ق"]) & filters.group & ~BANNED_USERS
+)
+@app.on_message(
     filters.command(["stop", "end", "cstop", "cend"]) & filters.group & ~BANNED_USERS
 )
 async def stop_music(cli, message: Message):
