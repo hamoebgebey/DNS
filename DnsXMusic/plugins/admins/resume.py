@@ -22,7 +22,7 @@ from DnsXMusic.utils.decorators import AdminRightsCheck
 RESUME_COMMAND = get_command("RESUME_COMMAND")
 
 
-@app.on_message(filters.command(RESUME_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(filters.command(["resume"]) | filters.command(["كمل","الغاء كتم","الغاء الكتم","اتكلم"],prefixes= ["/", "!","","#"]) & filters.group)
 @AdminRightsCheck
 async def resume_com(cli, message: Message, _, chat_id):
     if not len(message.command) == 1:
