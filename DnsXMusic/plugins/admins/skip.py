@@ -25,8 +25,6 @@ from DnsXMusic.utils.stream.autoclear import auto_clean
 from DnsXMusic.utils.thumbnails import gen_thumb
 
 # Commands
-SKIP_COMMAND = get_command("تخطي")
-
 SKIP_COMMAND = get_command("SKIP_COMMAND")
 
 @app.on_message(filters.command(SKIP_COMMAND) & filters.group & ~BANNED_USERS)
