@@ -59,6 +59,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             InlineKeyboardButton(text="⏹ ايقاف", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
           [
+              }  
             InlineKeyboardButton(
                 text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
             ),
