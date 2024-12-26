@@ -57,7 +57,7 @@ from DnsXMusic.utils.stream.stream import stream
     filters.command(
         [
             "تشغيل",
-            "فيديو",
+            "تشغيل فيديو",
             "تشغيل قناة",
             "لطيف",
             "تشغيل قناة فيديو",
