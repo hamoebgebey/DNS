@@ -33,8 +33,7 @@ from DnsXMusic.utils.inline.song import song_markup
 
 SONG_COMMAND = get_command("SONG_COMMAND")
 
-
-@app.on_message(filters.command(["song", "vsong", "video", "music"]) | filters.command(["تحميل","فيديو","صوت"],prefixes= ["/", "!","","#"]))
+@app.on_message(filters.command(SONG_COMMAND) & filters.group & ~BANNED_USERS)
 @language
 async def song_commad_group(client, message: Message, _):
 
@@ -324,97 +323,3 @@ async def song_download_cb(client, CallbackQuery, _):
     thumb_image_path = await CallbackQuery.message.download()
 
     duration = x["duration"]
-
-    if stype == "video":
-
-        thumb_image_path = await CallbackQuery.message.download()
-
-        width = CallbackQuery.message.photo.width
-
-        height = CallbackQuery.message.photo.height
-
-        try:
-
-            file_path = await YouTube.download(
-                yturl,
-                mystic,
-                songvideo=True,
-                format_id=format_id,
-                title=title,
-            )
-
-        except Exception as e:
-
-            return await mystic.edit_text(_["song_9"].format(e))
-
-        med = InputMediaVideo(
-            media=file_path,
-            duration=duration,
-            width=width,
-            height=height,
-            thumb=thumb_image_path,
-            caption=title,
-            supports_streaming=True,
-        )
-
-        await mystic.edit_text(_["song_11"])
-
-        await app.send_chat_action(
-            chat_id=CallbackQuery.message.chat.id,
-            action=enums.ChatAction.UPLOAD_VIDEO,
-        )
-
-        try:
-
-            await CallbackQuery.edit_message_media(media=med)
-
-        except Exception as e:
-
-            print(e)
-
-            return await mystic.edit_text(_["song_10"])
-
-        os.remove(file_path)
-
-    elif stype == "audio":
-
-        try:
-
-            filename = await YouTube.download(
-                yturl,
-                mystic,
-                songaudio=True,
-                format_id=format_id,
-                title=title,
-            )
-
-        except Exception as e:
-
-            return await mystic.edit_text(_["song_9"].format(e))
-
-        med = InputMediaAudio(
-            media=filename,
-            caption=title,
-            thumb=thumb_image_path,
-            title=title,
-            performer=x["uploader"],
-        )
-
-        await mystic.edit_text(_["song_11"])
-
-        await app.send_chat_action(
-            chat_id=CallbackQuery.message.chat.id,
-            action=enums.ChatAction.UPLOAD_AUDIO,
-        )
-
-        try:
-
-            await CallbackQuery.edit_message_media(media=med)
-
-        except Exception as e:
-
-            print(e)
-
-            return await mystic.edit_text(_["song_10"])
-
-        os.remove(filename)
