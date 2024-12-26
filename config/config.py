@@ -213,12 +213,12 @@ autoclean = []
 
 START_IMG_URL = getenv(
     "START_IMG_URL",
-    "https://t.me/SOURCE_SKRAN/34",
+    "https://i.ibb.co/G5FXStb/3acdcc5bf098.jpg",
 )
 
 PING_IMG_URL = getenv(
     "PING_IMG_URL",
-    "https://t.me/SOURCE_SKRAN/34",
+    "https://i.ibb.co/G5FXStb/3acdcc5bf098.jpg",
 )
 
 PLAYLIST_IMG_URL = getenv(
