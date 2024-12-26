@@ -1,4 +1,4 @@
-#
+<#
 # Copyright (C) 2024 by MISH0009@Github, < https://github.com/MISH0009 >.
 #
 # This file is part of < https://github.com/MISH0009/DNS > project,
@@ -52,12 +52,15 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             )
         ],
           [
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
+                ReplyKeyboardMarkup(
+                text="Owner", url=f"https://t.me/Moskook"
+          ),
                 InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
                 InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
                 InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
@@ -72,12 +75,15 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
 def stream_markup(_, videoid, chat_id):
     buttons = [
           [
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
+               ReplyKeyboardMarkup(
+                text="Owner", url=f"https://t.me/Moskook"
+          ),
         ],
         [InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="Close")],
     ]
@@ -97,12 +103,15 @@ def telegram_markup_timer(_, chat_id, played, dur):
             )
         ],
           [
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
+               ReplyKeyboardMarkup(
+                text="Owner", url=f"https://t.me/Moskook"
+          ),
         ],
         [
             InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="Close"),
@@ -114,13 +123,13 @@ def telegram_markup_timer(_, chat_id, played, dur):
 def telegram_markup(_, chat_id):
     buttons = [
           [
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Channel ", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            InlineKeyboardButton(
+            ReplyKeyboardMarkup(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
-               InlineKeyboardButton(
+               ReplyKeyboardMarkup(
                 text="Owner", url=f"https://t.me/Moskook"
           ),
         ],
