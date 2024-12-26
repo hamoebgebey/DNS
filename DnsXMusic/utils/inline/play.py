@@ -52,15 +52,6 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             )
         ],
           [
-            ReplyKeyboardMarkup(
-                text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
-            ),
-            ReplyKeyboardMarkup(
-                text="Support Group", url=f"https://t.me/mu_ku"
-                ),
-                ReplyKeyboardMarkup(
-                text="Owner", url=f"https://t.me/Moskook"
-          ),
                 InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
                 InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
                 InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
@@ -75,13 +66,13 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
 def stream_markup(_, videoid, chat_id):
     buttons = [
           [
-            ReplyKeyboardMarkup(
+            InlineKeyboardButton(
                 text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            ReplyKeyboardMarkup(
+            InlineKeyboardButton(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
-               ReplyKeyboardMarkup(
+               InlineKeyboardButton(
                 text="Owner", url=f"https://t.me/Moskook"
           ),
         ],
@@ -103,13 +94,13 @@ def telegram_markup_timer(_, chat_id, played, dur):
             )
         ],
           [
-            ReplyKeyboardMarkup(
+            InlineKeyboardButton(
                 text="Support Channel", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            ReplyKeyboardMarkup(
+            InlineKeyboardButton(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
-               ReplyKeyboardMarkup(
+               InlineKeyboardButton(
                 text="Owner", url=f"https://t.me/Moskook"
           ),
         ],
@@ -123,13 +114,13 @@ def telegram_markup_timer(_, chat_id, played, dur):
 def telegram_markup(_, chat_id):
     buttons = [
           [
-            ReplyKeyboardMarkup(
+            InlineKeyboardButton(
                 text="Support Channel ", url=f"https://t.me/SOURCE_SKRAN"
             ),
-            ReplyKeyboardMarkup(
+            InlineKeyboardButton(
                 text="Support Group", url=f"https://t.me/mu_ku"
                 ),
-               ReplyKeyboardMarkup(
+               InlineKeyboardButton(
                 text="Owner", url=f"https://t.me/Moskook"
           ),
         ],
