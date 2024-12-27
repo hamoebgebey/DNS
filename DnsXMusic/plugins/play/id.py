@@ -8,7 +8,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 #        #           #  #         #            #     #
 #          #        #  #####  #            #####    
 #           #    #    #          #     ##   #     #
-#              #      #####   ######   #     #
+owner_id = 7455472115
 
 
 iddof = []
