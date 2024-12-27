@@ -10,7 +10,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from DnsXMusic import app
 
 @app.on_message(
-    filters.command(["السورس", "ياسورس", "يا سورس", "سورس"]) & ~filters.edited
+    filters.command(["السورس", "ياسورس", "يا سورس", "سورس"]) & ~BANNED_USERS
 )
 async def huhh(client: Client, message: Message):
     await message.reply_video(
