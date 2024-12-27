@@ -7,7 +7,7 @@ import random
 from datetime import datetime
 import requests
 import pytz
-from DnsXMusic.core.call import Anon
+from DnsXMusic.core.call import DnsXMusic
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from DnsXMusic.core.call import Anon
