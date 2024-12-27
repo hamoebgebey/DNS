@@ -2,19 +2,17 @@ import asyncio
 from pyrogram import Client, filters
 from DnsXMusic import app
 import random
+from strings.filters import command
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-#       #             #  #####  #####      ####
-#        #           #  #         #            #     #
-#          #        #  #####  #            #####    
-#           #    #    #          #     ##   #     #
-#              #      #####   ######   #     #
+####  
 
 
 iddof = []
 @app.on_message(
-    filters.command(["قفل الايدي","تعطيل الايدي"], "")
-& filters.group
+    command(["قفل الايدي","تعطيل الايدي"],"")
+    & filters.group
+    & ~filters.edited
 )
 async def iddlock(client, message):
    get = await app.get_chat_member(message.chat.id, message.from_user.id)
@@ -24,13 +22,12 @@ async def iddlock(client, message):
       iddof.append(message.chat.id)
       return await message.reply_text("تم تعطيل الايدي بنجاح ✅🔒")
    else:
-      return await message.reply_text("تم معطل من قبل🔒")
-      iddof.append(message.chat.id)
-      return await message.reply_text("تم تعطيل الايدي بنجاح ✅🔒")
+      return await message.reply_text("لازم تكون ادمن يشخه علشان اسمع كلامك")
 
 @app.on_message(
-    filters.command(["فتح الايدي","تفعيل الايدي"], "")
-& filters.group
+    command(["فتح الايدي","تفعيل الايدي"])
+    & filters.group
+    & ~filters.edited
 )
 async def iddopen(client, message):
    get = await app.get_chat_member(message.chat.id, message.from_user.id)
@@ -46,8 +43,9 @@ async def iddopen(client, message):
 
 
 @app.on_message(
-    filters.command(["ايدي","id","ا"], "")
-& filters.group
+    command(["ايدي","id","ا"])
+    & filters.group
+    & ~filters.edited
 )
 async def iddd(client, message):
     if message.chat.id in iddof:
@@ -70,8 +68,9 @@ async def iddd(client, message):
 
 iddof = []
 @app.on_message(
-    filters.command(["قفل جمالي","تعطيل جمالي"], "")
-& filters.group
+    command(["قفل جمالي","تعطيل جمالي"])
+    & filters.group
+    & ~filters.edited
 )
 async def lllock(client, message):
    get = await app.get_chat_member(message.chat.id, message.from_user.id)
@@ -84,8 +83,9 @@ async def lllock(client, message):
       return await message.reply_text("لازم تكون ادمن يشخه علشان اسمع كلامك")
 
 @app.on_message(
-    filters.command(["فتح جمالي","تفعيل جمالي"], "")
-& filters.group
+    command(["فتح جمالي","تفعيل جمالي"])
+    & filters.group
+    & ~filters.edited
 )
 async def idljjopen(client, message):
    get = await app.get_chat_member(message.chat.id, message.from_user.id)
@@ -101,8 +101,9 @@ async def idljjopen(client, message):
 
 
 @app.on_message(
-    filters.command(["جمالي"], "")
-& filters.group
+    command(["جمالي"])
+    & filters.group
+    & ~filters.edited
 )
 async def idjjdd(client, message):
     if message.chat.id in iddof:
