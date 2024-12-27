@@ -1,7 +1,7 @@
 import asyncio
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import filters, Client
-from AnonXMusic import app
+from DnsXMusic import app
 
 # Replace the following line with your actual OWNER_ID
 OWNER_ID = 123456789
