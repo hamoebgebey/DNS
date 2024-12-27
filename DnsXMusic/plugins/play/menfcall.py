@@ -3,11 +3,11 @@ from DnsXMusic import app
 import asyncio
 from DnsXMusic.core.call import Dns
 from DnsXMusic.utils.database import *
-from pytgcalls.exceptions import NoActiveGroupCall, TelegramServerError, AlreadyJoinedError
+from pytgcalls.exceptions import NoActiveGroupCall, AlreadyJoinedError
 
 @app.on_message(filters.regex("^مين في الكول$"))
 async def strcall(client: Client, message):
-    assistant = await group_assistant(Yukki, message.chat.id)
+    assistant = await group_assistant(Dns, message.chat.id)
     try:
         # هنا، نحذف الاتصال الصوتي
         # يمكن إزالة أي كود متعلق بالاتصال
