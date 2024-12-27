@@ -8,7 +8,7 @@ from pyrogram import filters
 import random
 from pyrogram import Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
-from strings.filters import command
+from pyrogram import filters import command
 from DnsXMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 from DnsXMusic import app
 from random import  choice, randint
