@@ -7,7 +7,7 @@ from pyrogram import filters
 import random
 from pyrogram import Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from AnonXMusic import app
+from DnsXMusic import app
 
 @app.on_message(
     filters.command(["السورس", "ياسورس", "يا سورس", "سورس"]) & ~filters.edited
