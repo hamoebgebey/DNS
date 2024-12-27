@@ -11,7 +11,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 #              #      #####   ######   #     #
 
 
-iddof = [7455472115]
+iddof = []
 @app.on_message(
     filters.command(["قفل الايدي","تعطيل الايدي"], "")
 & filters.group
@@ -24,7 +24,9 @@ async def iddlock(client, message):
       iddof.append(message.chat.id)
       return await message.reply_text("تم تعطيل الايدي بنجاح ✅🔒")
    else:
-      return await message.reply_text("لازم تكون ادمن يشخه علشان اسمع كلامك")
+      return await message.reply_text("تم معطل من قبل🔒")
+      iddof.append(message.chat.id)
+      return await message.reply_text("تم تعطيل الايدي بنجاح ✅🔒")
 
 @app.on_message(
     filters.command(["فتح الايدي","تفعيل الايدي"], "")
