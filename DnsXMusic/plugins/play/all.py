@@ -8,7 +8,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import FloodWait
 
 # دالة لإدارة أوامر خاصة بالمستخدمين
-@app.on_message(command(["المالك", "صاحب الخرابه", "المنشي"], "") & filters.group)
+@app.on_message(filters.command(["", "Owner"]) | filters.command(["المالك","صاحب الخرابه","المنشي"],prefixes= ["/", "!","","#"]) & filters.group)
 async def gak_owne(client: Client, message: Message):
     if len(message.command) >= 2:
         return 
