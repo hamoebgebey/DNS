@@ -1,7 +1,7 @@
 from pyrogram import filters, Client
 from DnsXMusic import app
 import asyncio
-from DnsXMusic.core.call import Yukki
+from DnsXMusic.core.call import Dns
 from DnsXMusic.utils.database import *
 from pytgcalls.exceptions import NoActiveGroupCall, TelegramServerError, AlreadyJoinedError
 
