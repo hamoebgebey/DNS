@@ -9,9 +9,7 @@ from pyrogram import Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from DnsXMusic import app
 
-@app.on_message(
-    filters.command(["السورس", "ياسورس", "يا سورس", "سورس"]) & ~BANNED_USERS
-)
+@app.on_message(filters.command(["source"]) | filters.command(["سورس","ياسورس","سورسي"],prefixes= ["/", "!","","#"]) & filters.group)
 async def huhh(client: Client, message: Message):
     await message.reply_video(
         video="https://telegra.ph/file/d0a2e1e5a0dd7ddbd6512.mp4",
