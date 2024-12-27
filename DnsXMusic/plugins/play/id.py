@@ -8,10 +8,10 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 #        #           #  #         #            #     #
 #          #        #  #####  #            #####    
 #           #    #    #          #     ##   #     #
-owner_id = 7455472115
 
 
-iddof = []
+
+iddof = [7455472115]
 @app.on_message(
     filters.command(["قفل الايدي","تعطيل الايدي"], "")
 & filters.group
