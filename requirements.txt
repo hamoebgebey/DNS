@@ -2,6 +2,7 @@ aiofiles
 aiohttp
 asyncio
 beautifulsoup4
+googlesearch
 pyfiglet
 dnspython
 ffmpeg-python
