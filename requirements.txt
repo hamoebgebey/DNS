@@ -2,6 +2,7 @@ aiofiles
 aiohttp
 asyncio
 beautifulsoup4
+install --upgrade pip
 googlesearch
 dnspython
 ffmpeg-python
