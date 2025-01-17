@@ -9,7 +9,7 @@ gitpython
 hachoir
 git add requirements.txt
 git commit -m "Add pyfiglet dependency"
-git push heroku main
+git push heroku master
 heroku3
 httpx[http2]==0.27.2
 lyricsgenius
