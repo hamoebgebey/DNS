@@ -7,7 +7,9 @@ dnspython
 ffmpeg-python
 gitpython
 hachoir
-pyfiglet
+git add requirements.txt
+git commit -m "Add pyfiglet dependency"
+git push heroku main
 heroku3
 httpx[http2]==0.27.2
 lyricsgenius
