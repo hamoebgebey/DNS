@@ -1,6 +1,7 @@
 asyncio
 async-lru
 aiohttp
+googlesearch
 pyfiglet
 beautifulsoup4
 dnspython
