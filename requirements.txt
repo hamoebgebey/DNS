@@ -2,7 +2,7 @@ asyncio
 async-lru
 aiohttp
 googlesearch
-pyfiglet
+pyfiglet==0.8.0
 beautifulsoup4
 dnspython
 ffmpeg-python
