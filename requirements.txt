@@ -1,6 +1,7 @@
 asyncio
 async-lru
 aiohttp
+pyfiglet
 beautifulsoup4
 dnspython
 ffmpeg-python
